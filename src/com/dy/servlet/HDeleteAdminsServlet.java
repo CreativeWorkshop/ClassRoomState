@@ -1,13 +1,8 @@
 package com.dy.servlet;
 
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.net.URLDecoder;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.Statement;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -16,20 +11,20 @@ import javax.servlet.http.HttpServletResponse;
 import com.dy.util.DBUtil;
 
 /**
- * Servlet implementation class RegisterServlet
+ * Servlet implementation class HDeleteUserServlet
  */
-public class RegisterServlet extends HttpServlet {
+public class HDeleteAdminsServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public RegisterServlet() {
+    public HDeleteAdminsServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
 
-    /**
+	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -42,36 +37,20 @@ public class RegisterServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		String userName = URLDecoder.decode(request.getParameter("userName"),"UTF-8");
-		String password = URLDecoder.decode(request.getParameter("password"),"UTF-8");
-		String sql2 = "select count(*) totalcount from users where username='"+userName+"'";
-		String sql = "insert into users(userName,pwd) values('"+userName+"','"+password+"')";
+		
+		String id = request.getParameter("id");
+		String sql1 = "delete from  admins  where id="+id;
 		DBUtil util = new DBUtil();
 		Connection conn = util.openConnection();
-		PrintWriter out = response.getWriter();
-		String result = "0";
 		try {
-			PreparedStatement pstmt = conn.prepareStatement(sql2);
-			ResultSet rs = pstmt.executeQuery();
-			int count=0;
-			while(rs.next()) {
-				count=rs.getInt("totalcount");
-			}
-			if(count!=0){
-				result = "2";
-			}else{
-				Statement stmt = conn.createStatement();
-				stmt.executeUpdate(sql);
-				 result = "1";
-			}
-			
+			Statement stmt = conn.createStatement();
+			stmt.executeUpdate(sql1);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
-			result = "2";
 		}finally {
 			util.closeConn(conn);
 		}	
-		out.print(result);
+		
+		response.sendRedirect("admin/index/adminManage.jsp");
 	}
 }

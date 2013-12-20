@@ -58,16 +58,12 @@ try {
 					<td height="14" colspan="8" background="<%=path %>/images/tbg.gif">&nbsp;用户管理&nbsp;</td>
 				</tr>
 				<tr align="center" bgcolor="#FAFAF1" height="22">
-					<td width="11%">id</td>
 					<td width="11%">用户名</td>
 					<td width="11%">密码</td>
 					<td width="11%">操作</td>
 		        </tr>	
 <% while(rs.next()) {%>
 				<tr align='center' bgcolor="#FFFFFF" onMouseMove="javascript:this.bgColor='red';" onMouseOut="javascript:this.bgColor='#FFFFFF';" height="22">
-					<td bgcolor="#FFFFFF" align="center">
-						<%=rs.getInt("id")%>
-					</td>
 					<td bgcolor="#FFFFFF" align="center">
 						<%=rs.getString("userName") %>
 					</td>
@@ -76,8 +72,7 @@ try {
 					</td>
 					<td bgcolor="#FFFFFF" align="center">
 						<a href="#" onclick="stuDel(<%=rs.getInt("id") %>)" class="pn-loperator">删除</a>
-					    <%--<a href="#" onclick="stuEditPre(<s:property value="#stu.stuId"/>)" class="pn-loperator">编辑</a>
-					--%></td>
+					</td>
 				</tr>
 				<%} %>
 			</table>

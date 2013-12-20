@@ -69,22 +69,22 @@ try {
 					<td height="14" colspan="8" background="<%=path %>/images/tbg.gif">&nbsp;教室管理&nbsp;</td>
 				</tr>
 				<tr align="center" bgcolor="#FAFAF1" height="22">
-					<td width="11%">id</td>
 					<td width="11%">教室号</td>
 					<td width="11%">状态</td>
+					<td width="11%">签到人数</td>
 					<td width="11%">操作</td>
 					<td width="11%">操作</td>
 		        </tr>	
 <% while(rs.next()) {%>
 				<tr align='center' bgcolor="#FFFFFF" onMouseMove="javascript:this.bgColor='red';" onMouseOut="javascript:this.bgColor='#FFFFFF';" height="22">
 					<td bgcolor="#FFFFFF" align="center">
-						<%=rs.getInt("id")%>
-					</td>
-					<td bgcolor="#FFFFFF" align="center">
 						<%=rs.getString("no") %>
 					</td>
 					<td bgcolor="#FFFFFF" align="center">
 					    <%=rs.getString("state") %>
+					</td>
+					<td bgcolor="#FFFFFF" align="center">
+					    <%=rs.getString("number") %>
 					</td>
 				
 				<%if(rs.getString("state").equals("占用")){ %>

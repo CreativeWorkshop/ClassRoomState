@@ -1,7 +1,24 @@
 <%@ page language="java" pageEncoding="utf-8"%>
+<%@page import="java.sql.Connection" %>
+<%@page import="java.sql.PreparedStatement" %>
+<%@page import="java.sql.ResultSet" %>
+<%@page import="java.sql.SQLException" %>
+<%@page import="com.dy.util.DBUtil" %>
 <%
     String path = request.getContextPath();
     String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+    
+    String sql = "select count(id) totalCount from admins where userName=document.ThisForm.userName.value and password=document.ThisForm.userpw.value";
+    DBUtil util = new DBUtil();
+    Connection conn = util.openConnection();
+    ResultSet rs = null;
+    try {
+    	PreparedStatement pstmt = conn.prepareStatement(sql);
+    	rs = pstmt.executeQuery();
+    }catch (SQLException e) {
+    	e.printStackTrace();
+    }
+//     int d=rs.getInt("totalCount");
 %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <head>
@@ -66,13 +83,15 @@
 	//登入
 	 document.ThisForm.submit();
  }
-
+ 
+ //d="select count(id) from admins where userName=document.ThisForm.userName.value and password=document.ThisForm.userpw.value"
  function callback(data)
  {
     document.getElementById("indicator").style.display="none";
-    if(data=="no")
+    if(data=="yes")
     {
         alert("用户名或密码错误");
+        return false;
     }
     if(data=="yes")
     {
@@ -96,7 +115,7 @@
 	 </tr>
 	 <tr>
 		<td width="559">
-			<form name="ThisForm" method="POST" action="HLoginServlet">
+			<form name="ThisForm" method="POST" action="<%=path %>/HLoginServlet">
 				<table width="410" height="198" border="0" align="right" cellpadding="0" cellspacing="0">
 					<tr>
 						<td height="10" colspan="2"></td>
@@ -106,7 +125,7 @@
 						    <span class="STYLE15" >用户名：</span>
 						</td>
 						<td width="356" valign="bottom">
-					        <input name="userName"  type="text" class="input2" onMouseOver="this.style.background='#F0DAF3';" onMouseOut="this.style.background='#FFFFFF'">
+					        <input id="userName" name="userName"  type="text" class="input2" onMouseOver="this.style.background='#F0DAF3';" onMouseOut="this.style.background='#FFFFFF'">
 						</td>
 					</tr>
 					<tr>
@@ -115,7 +134,7 @@
 					<tr>
 						<td height="31" colspan="2" valign="top" class="STYLE15">
 						     密&nbsp;&nbsp;&nbsp;&nbsp;码：
-							<input name="userPw" type="password" size="21" class="input2" align="bottom" onMouseOver="this.style.background='#F0DAF3';" onMouseOut="this.style.background='#FFFFFF'">
+							<input id="userpw" name="userPw" type="password" size="21" class="input2" align="bottom" onMouseOver="this.style.background='#F0DAF3';" onMouseOut="this.style.background='#FFFFFF'">
 						</td>
 					</tr>
 					<tr>

@@ -109,6 +109,17 @@ String path = request.getContextPath();
 	      <!-- 1 -->
 	      <!-- 1 -->
 	      <dl class='bitem'>
+	        <dt onClick='showHide("items1_1")'><b>管理员管理</b></dt>
+	        <dd style='display:block' class='sitem' id='items1_1'>
+	          <ul class='sitemu'>
+	              <li><a href='<%=path %>/admin/index/adminManage.jsp' target='main'>管理员管理</a> </li>
+	              <li><a href='<%=path %>/admin/index/adminAdd.jsp' target='main'>管理员录入</a> </li>
+	          </ul>
+	        </dd>
+	      </dl>
+	      <!-- 1 -->
+	      <!-- 1 -->
+	      <dl class='bitem'>
 	        <dt onClick='showHide("items1_1")'><b>用户管理</b></dt>
 	        <dd style='display:block' class='sitem' id='items1_1'>
 	          <ul class='sitemu'>
@@ -130,16 +141,7 @@ String path = request.getContextPath();
 	      </dl>
 	      
 	     
-	      <!-- 1 -->
-	      <!-- 1 -->
-	      <dl class='bitem'>
-	        <dt onClick='showHide("items1_1")'><b>自动安排教室</b></dt>
-	        <dd style='display:block' class='sitem' id='items1_1'>
-	          <ul class='sitemu'>
-	              <li><a href='<%=path %>/admin/order/orderMana.jsp' target='main'>自动安排教室</a> </li>
-	          </ul>
-	        </dd>
-	      </dl>
+	      
 		  </td>
 	  </tr>
 	</table>

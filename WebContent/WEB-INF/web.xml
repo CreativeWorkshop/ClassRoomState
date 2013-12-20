@@ -9,6 +9,22 @@
     <url-pattern>/AddGoodsServlet</url-pattern>
   </servlet-mapping>
   <servlet>
+    <servlet-name>leaveServlet</servlet-name>
+    <servlet-class>com.dy.servlet.leaveServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>leaveServlet</servlet-name>
+    <url-pattern>/leaveServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>SignServlet</servlet-name>
+    <servlet-class>com.dy.servlet.SignServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>SignServlet</servlet-name>
+    <url-pattern>/SignServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
     <servlet-name>DdListServlet</servlet-name>
     <servlet-class>com.dy.servlet.DdListServlet</servlet-class>
   </servlet>
@@ -116,6 +132,16 @@
     <servlet-name>HupdatePwdServlet</servlet-name>
     <url-pattern>/HupdatePwdServlet</url-pattern>
   </servlet-mapping>
+    <servlet>
+    <description></description>
+    <display-name>addAdmin</display-name>
+    <servlet-name>addAdmin</servlet-name>
+    <servlet-class>com.dy.servlet.addAdmin</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>addAdmin</servlet-name>
+    <url-pattern>/addAdmin</url-pattern>
+  </servlet-mapping>
   <servlet>
     <description></description>
     <display-name>HaddUserServlet</display-name>
@@ -125,6 +151,16 @@
   <servlet-mapping>
     <servlet-name>HaddUserServlet</servlet-name>
     <url-pattern>/HaddUserServlet</url-pattern>
+  </servlet-mapping>
+    <servlet>
+    <description></description>
+    <display-name>HDeleteAdminsServlet</display-name>
+    <servlet-name>HDeleteAdminsServlet</servlet-name>
+    <servlet-class>com.dy.servlet.HDeleteAdminsServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>HDeleteAdminsServlet</servlet-name>
+    <url-pattern>/HDeleteAdminsServlet</url-pattern>
   </servlet-mapping>
   <servlet>
     <description></description>

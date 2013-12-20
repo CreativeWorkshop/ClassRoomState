@@ -6,6 +6,7 @@ import java.net.URLDecoder;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 
 import javax.servlet.ServletException;
@@ -16,23 +17,20 @@ import javax.servlet.http.HttpServletResponse;
 import com.dy.util.DBUtil;
 
 /**
- * Servlet implementation class RegisterServlet
+ * Servlet implementation class SignServlet
  */
-public class RegisterServlet extends HttpServlet {
+public class SignServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public RegisterServlet() {
+    public SignServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
 
-    /**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		this.doPost(request, response);
 	}
@@ -42,36 +40,37 @@ public class RegisterServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		String userName = URLDecoder.decode(request.getParameter("userName"),"UTF-8");
-		String password = URLDecoder.decode(request.getParameter("password"),"UTF-8");
-		String sql2 = "select count(*) totalcount from users where username='"+userName+"'";
-		String sql = "insert into users(userName,pwd) values('"+userName+"','"+password+"')";
+		String no = URLDecoder.decode(request.getParameter("no"),"UTF-8");
+		String sql = "update room set room.number=room.number+1 where no='"+no+"'";
+		String sql2 = "select number from room where no='"+no+"'";
 		DBUtil util = new DBUtil();
 		Connection conn = util.openConnection();
-		PrintWriter out = response.getWriter();
-		String result = "0";
-		try {
+		int data1 = 0;
+		int data2 = 0;
+		int result = 0;
+		try {					
+			Statement stmt = conn.createStatement();
+			stmt.executeUpdate(sql);
+			
 			PreparedStatement pstmt = conn.prepareStatement(sql2);
 			ResultSet rs = pstmt.executeQuery();
-			int count=0;
+			data1 = rs.getInt("number");	
 			while(rs.next()) {
-				count=rs.getInt("totalcount");
+				data2=rs.getInt("number");
 			}
-			if(count!=0){
-				result = "2";
+			if(data2>data1){
+				result = 1;
 			}else{
-				Statement stmt = conn.createStatement();
-				stmt.executeUpdate(sql);
-				 result = "1";
+				result = 0;
 			}
 			
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
+		}catch (SQLException e) {
 			e.printStackTrace();
-			result = "2";
-		}finally {
+		} finally {
 			util.closeConn(conn);
 		}	
+		PrintWriter out = response.getWriter();
 		out.print(result);
 	}
+
 }

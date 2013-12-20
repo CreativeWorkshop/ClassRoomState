@@ -2,12 +2,12 @@ package com.dy.servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.URLDecoder;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Date;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -17,23 +17,20 @@ import javax.servlet.http.HttpServletResponse;
 import com.dy.util.DBUtil;
 
 /**
- * Servlet implementation class DdListServlet
+ * Servlet implementation class leaveServlet
  */
-public class DdListServlet extends HttpServlet {
+public class leaveServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public DdListServlet() {
+    public leaveServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
 
-    /**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		this.doPost(request, response);
 	}
@@ -43,34 +40,37 @@ public class DdListServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		String myid = request.getParameter("myid");
-		String sql = "SELECT * from dingdan where myid="+myid;
+		String no = URLDecoder.decode(request.getParameter("no"),"UTF-8");
+		String sql = "update room set room.number=room.number-1 where no='"+no+"'";
+		String sql2 = "select number from room where no='"+no+"'";
 		DBUtil util = new DBUtil();
 		Connection conn = util.openConnection();
-		String result = "";
-		try {
-			PreparedStatement pstmt = conn.prepareStatement(sql);
+		int data1 = 0;
+		int data2 = 0;
+		int result = 0;
+		try {					
+			Statement stmt = conn.createStatement();
+			stmt.executeUpdate(sql);
+			
+			PreparedStatement pstmt = conn.prepareStatement(sql2);
 			ResultSet rs = pstmt.executeQuery();
-			int i = 0;
+			data1 = rs.getInt("number");	
 			while(rs.next()) {
-				int ddid = rs.getInt("id");
-				Date ddtime = rs.getDate("dates");
-				if(i!=0){
-					result+="@";
-				}
-				result+=ddid;
-				result+=",";
-				result+=ddtime;
-				i++;
+				data2=rs.getInt("number");
 			}
+			if(data2<data1){
+				result = 1;
+			}else{
+				result = 0;
+			}
+			
 		}catch (SQLException e) {
-			result = "0";
 			e.printStackTrace();
 		} finally {
 			util.closeConn(conn);
 		}	
 		PrintWriter out = response.getWriter();
 		out.print(result);
-		
 	}
+
 }

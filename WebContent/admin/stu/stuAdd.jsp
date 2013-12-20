@@ -15,8 +15,31 @@ String path = request.getContextPath();
 		<meta http-equiv="description" content="This is my page" />
         
         <link rel="stylesheet" type="text/css" href="<%=path %>/css/base.css" />
+       
         
         <script language="javascript">
+            function check2()
+            {
+                 
+                 if(document.formAdd.name.value =="")
+                 {
+                     alert("账号不能空");
+                     return ;
+                 }
+                 if(document.formAdd.pwd1.value =="")
+                 {
+                     alert("密码不能空");
+                     return ;
+                 }
+                 if(document.formAdd.pwd1.value != document.formAdd.pwd2.value)
+                 {
+                     alert("两次输入的密码不一致");
+                     return ;
+                 }
+                 
+                 document.getElementById("i").style.display="block";
+                 document.formAdd.submit();
+            }
         </script>
 	</head>
 
@@ -31,7 +54,7 @@ String path = request.getContextPath();
 						         账号：
 						    </td>
 						    <td width="75%" bgcolor="#FFFFFF" align="left">
-						        <input type="text" name="name" size="20"/>
+						        <input type="text" id="name" name="name" size="20"/>
 						    </td>
 						</tr>
 						
@@ -40,7 +63,7 @@ String path = request.getContextPath();
 						        密码：
 						    </td>
 						    <td width="75%" bgcolor="#FFFFFF" align="left">
-						         <input type="text" name="pwd1" size="20"/>
+						         <input type="password" id="pwd1" name="pwd1" size="20"/>
 						    </td>
 						</tr>
 						<tr align='center' bgcolor="#FFFFFF" onMouseMove="javascript:this.bgColor='red';" onMouseOut="javascript:this.bgColor='#FFFFFF';" height="22">
@@ -48,7 +71,7 @@ String path = request.getContextPath();
 						        确认密码：
 						    </td>
 						    <td width="75%" bgcolor="#FFFFFF" align="left">
-						         <input type="text" name="pwd2" size="20"/>
+						         <input type="password" id="pwd2" name="pwd2" size="20"/>
 						    </td>
 						</tr>
 						
@@ -57,8 +80,9 @@ String path = request.getContextPath();
 						        &nbsp;
 						    </td>
 						    <td width="75%" bgcolor="#FFFFFF" align="left">
-						       <input type="submit" value="提交"/>&nbsp; 
+						       <input type="button" value="提交" onclick="check2()"/>&nbsp; 
 						       <input type="reset" value="重置"/>&nbsp;
+						       <img id="i" src="<%=path %>/images/loading.gif" alt="Loading..." style="display:none"/>
 						    </td>
 						</tr>
 					 </table>
